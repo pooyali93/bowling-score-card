@@ -11,6 +11,8 @@ const CreateGames = ({navigation}) => {
   const [date, setDate] = useState("");
   const [teamOne, setTeamOne] = useState("");
   const [teamTwo, setTeamTwo] = useState("");
+
+  // const [teamOnePlayer, setTeamOnePlayer1] = useState(""); state array 
   const [teamOnePlayer1, setTeamOnePlayer1] = useState("");
   const [teamOnePlayer2, setTeamOnePlayer2] = useState("");
   const [teamOnePlayer3, setTeamOnePlayer3] = useState("");
@@ -129,16 +131,8 @@ const CreateGames = ({navigation}) => {
                     }}/>
               </View>
 
-
-              
-
-              
-
               <Pressable style={styles.button} onPress={() => {  
-                storeTeamPlayerOne.push(teamOnePlayer1);
-                storeTeamPlayerOne.push(teamOnePlayer2);
-                storeTeamPlayerOne.push(teamOnePlayer3);
-                storeTeamPlayerOne.push(teamOnePlayer4);
+                storeTeamPlayerOne.push(teamOnePlayer1, teamOnePlayer2, teamOnePlayer3, teamOnePlayer4);
                   create(competitionName, rink,teamOne,teamTwo,storeTeamPlayerOne, navigation.navigate("Load Games"));
               }}>
                 <Text style={styles.buttonText}> Submit</Text>
