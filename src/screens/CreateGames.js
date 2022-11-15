@@ -41,11 +41,10 @@ const CreateGames = ({navigation}) => {
   
 
     return (
-      <ScrollView >
-        <View style={{}}>
-        <Text style={styles.heading}> Caterham Bowling Club </Text>
-          <Text style={styles.textLabel}> Competition name:  </Text>
-          <TextInput 
+      <>
+      <TextInput/>      
+      
+      <TextInput 
               style={styles.textInput} 
               returnKeyType={'done'}
               placeholder="Type competition name" value={competitionName}
@@ -56,6 +55,7 @@ const CreateGames = ({navigation}) => {
           />
 
             <Text style={styles.textLabel}> Rink No:  </Text>
+            <TextInput label="rink" placeholder="Enter rink number" />
               <TextInput 
                   style={styles.textInput}
                   keyboardType="numeric"
@@ -133,65 +133,20 @@ const CreateGames = ({navigation}) => {
 
               <Pressable style={styles.button} onPress={() => {  
                 storeTeamPlayerOne.push(teamOnePlayer1, teamOnePlayer2, teamOnePlayer3, teamOnePlayer4);
-                  create(competitionName, rink,teamOne,teamTwo,storeTeamPlayerOne, navigation.navigate("Load Games"));
+                  create(competitionName, rink,teamOne,teamTwo,storeTeamPlayerOne, navigation.navigate("Previous Games"));
               }}>
                 <Text style={styles.buttonText}> Submit</Text>
               </Pressable>
-      </View>
-    </ScrollView>
+
+              </>
+
+      
     );
 }
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: '1', 
-    justifyContent: 'center', 
-    alignItems: 'center'
-  },
-  
-    viewWrapper: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  
-    dateContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderWidth:1,
-      margin:5,
-      padding:8
-    },
-  
-    inputStyle: {
-      flex: 1,
-      fontSize:18,
-      color:'grey'
-    },
-  
-    heading: {
-      fontSize:24,
-      textAlign:'center',
-      marginTop:10,
-      color:'#043730',
-      fontWeight: 'bold',
-    },
-  
-    textInput: {
-      fontSize:20,
-      padding:10,
-      margin:5,
-      borderWidth:1,
-    },
-    textLabel: {
-      fontSize:18,
-      marginTop:10,
-      color:'#454648',
-      fontWeight: 'bold',
-      letterSpacing: 0.5,
-    },
+ 
     button: {
       alignItems: 'center',
       justifyContent: 'center',

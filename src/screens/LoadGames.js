@@ -1,6 +1,6 @@
 import { useEffect, useContext} from "react";
 import { View, StyleSheet, Text, FlatList, Pressable} from "react-native"
-import {MaterialIcons} from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 import GameContext from "../context/GameContext";
 
 
@@ -10,8 +10,8 @@ const LoadGames = ({navigation}) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Pressable onPress={() => navigation.navigate('Create Game')}>
-                    <MaterialIcons name='add' size={28} color="black" />
+                <Pressable onPress={() => navigation.navigate('Create Games')}>
+                   <Ionicons name="add-circle" style={{paddingRight:10,}}size={28} color="black" />
                 </Pressable>
             )
         })
@@ -23,7 +23,7 @@ const LoadGames = ({navigation}) => {
                 keyExtractor={(e) => e.id.toString()}
                 renderItem={({item}) =>  {
                 return (
-                    <Pressable onPress={() => navigation.navigate('ViewGames', { 
+                    <Pressable onPress={() => navigation.navigate('View Games', { 
                         id: item.id,
                         competitionName: item.competitionName,
                         rink: item.rink,
@@ -43,7 +43,7 @@ const LoadGames = ({navigation}) => {
                                 {item.date = new Date().toLocaleDateString()}
                             </Text>
                         <Pressable onPress={() => {remove(item.id)}}>
-                            <MaterialIcons name='delete' size={28} color="red" />
+                            <Ionicons name='trash' size={28} color="red" />
                         </Pressable>
                     </View>
                     
