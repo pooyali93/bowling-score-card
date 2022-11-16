@@ -1,0 +1,34 @@
+date picker 
+<View style={styles.dateContainer} >
+    <DateTimePickerModal
+    isVisible={datePickerVisible}
+    mode="date"
+    locale="en_GB"
+    onConfirm={handleConfirm}
+    onCancel={hideDatePicker}
+    />
+<Text style={styles.inputStyle}>
+{selectedDate ? selectedDate.toLocaleDateString() : 'Select a date'}
+</Text>
+<MaterialIcons name="date-range" size={32} style={{alignSelf:'center'}} color="black" onPress={showDatePicker}/>
+</View>
+
+
+
+ <View>
+                  <Button title='+ 'onPress={() => 
+                     {
+                      teamOnePlayers.map((item, i) => {
+
+                          <TextInput
+                            onChange={handleChange}
+                            value={item.value}
+                            id={i}
+                            type={item.type}
+                            size="40"
+                          />
+                     })}
+                    }
+                  />
+
+                  </View>

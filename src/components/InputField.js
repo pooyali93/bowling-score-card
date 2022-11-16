@@ -2,18 +2,17 @@ import React from 'react';
 import { StyleSheet, TextInput, View, Text, ScrollView } from 'react-native';
 
 
-const TextInput = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
+const InputField = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
 return (
     <ScrollView >
         <View>
-        <Text style={styles.heading}> Caterham Bowling Club </Text>
-          <Text style={styles.textLabel}> Competition name:  </Text>
-            <Text style={styles.labelStyle}>{label}</Text>
+            <Text style={styles.textLabel}>{label}</Text>
             <TextInput
             secureTextEntry={secureTextEntry}
+            returnKeyType={'done'}
             placeholder={placeholder}
             autoCorrect={false}
-            style={inputStyle}
+            style={styles.textInput}
             value={value}
             onChangeText={onChangeText}
             />
@@ -46,13 +45,7 @@ const styles = StyleSheet.create({
           margin:5,
           padding:8
         },
-      
-        inputStyle: {
-          flex: 1,
-          fontSize:18,
-          color:'grey'
-        },
-      
+       
         heading: {
           fontSize:24,
           textAlign:'center',
@@ -76,4 +69,4 @@ const styles = StyleSheet.create({
         },
     });
 
-export default TextInput;
+export default InputField;

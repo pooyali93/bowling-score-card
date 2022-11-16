@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 
@@ -11,6 +11,7 @@ const HomeScreen = () => {
       <Text style={styles.heroText}> Active since 1911</Text>
       <StatusBar style="auto" />
     </View>
+
   );
 }
 

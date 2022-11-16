@@ -23,7 +23,7 @@ const reducer = (state, action) => {
                 teamOnePlayers:action.payload.teamOnePlayers,
                 teamTwoPlayers:action.payload.teamTwoPlayers,
 
-                date: new Date()
+                date: new Date().toUTCString()
   
               }
           ];
