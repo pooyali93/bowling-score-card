@@ -7,7 +7,7 @@ import GameContext from "../context/GameContext";
 
 const LoadGames = ({navigation}) => {
     const {state, remove} = useContext(GameContext);
-    console.log("Print Staye ")
+    console.log("Print State ")
     console.log(state)
     useEffect(() => {
         navigation.setOptions({
