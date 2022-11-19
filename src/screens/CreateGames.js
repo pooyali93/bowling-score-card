@@ -12,47 +12,17 @@ const CreateGames = ({navigation}) => {
   const [teamOne, setTeamOne] = useState("");
   const [teamTwo, setTeamTwo] = useState("");
 
-  // const [teamOnePlayer, setTeamOnePlayer1] = useState(""); state array 
-  const [teamOnePlayer1, setTeamOnePlayer1] = useState("");
-  const [teamOnePlayer2, setTeamOnePlayer2] = useState("");
-  const [teamOnePlayer3, setTeamOnePlayer3] = useState("");
-  const [teamOnePlayer4, setTeamOnePlayer4] = useState("");
 
+  //Team Player hooks 
+  const [teamOnePlayerNames, setTeamOnePlayerNames] = useState([]);
+  const updateTeamOnePlayers = (path, value) => {
+    setTeamOnePlayerNames({...teamOnePlayerNames, [path]: value});
+  }
 
-  const playerName = [
-    {
-      type: "text",
-      id: 1,
-      value: ""
-    }
-  ];
-
-  const [teamOnePlayers, setTeamOnePlayer] = useState(playerName);
-
-  const addInput = () => {
-    setTeamOnePlayer(player => {
-      return [
-        ...player,
-        {
-          type: "text",
-          value: ""
-        }
-      ];
-    });
-  };
-
-  const handleChange = e => {
-    e.preventDefault();
-
-    const index = e.target.id;
-    setTeamOnePlayer(player => {
-      const newPlayer = player.slice();
-      newPlayer[index].value = e.target.value;
-
-      return newPlayer;
-    });
-  };
-
+  const [teamTwoPlayerNames, setTeamTwoPlayerNames] = useState([]);
+  const updateTeamTwoPlayers= (path, value) => {
+    setTeamTwoPlayerNames({...teamTwoPlayerNames, [path]: value});
+  }
 
 
   const [selectedDate, setSelectedDate] = useState();
@@ -80,6 +50,7 @@ const CreateGames = ({navigation}) => {
         <View style={styles.container}>
         <Text style={styles.heading}> Create your game </Text>
         <Text style={styles.textLabel}> Competition:  </Text>
+          
         <TextInput 
                 style={styles.textInput} 
                 returnKeyType={'done'}
@@ -138,106 +109,47 @@ const CreateGames = ({navigation}) => {
                       }}
                   />
 
-
-                  <View>
-                  <Button title='+ 'onPress={() => 
-                     {
-                      teamOnePlayers.map((item, i) => {
-
-                          <TextInput
-                            onChange={handleChange}
-                            value={item.value}
-                            id={i}
-                            type={item.type}
-                            size="40"
-                          />
-                     })}
-                    }
-                  />
-
-                  </View>
-               
                   <Text style={styles.textLabel}> Team {teamOne} Player names:  </Text>
                   <View style={{flexDirection:"row"}}>
-                    <View style={styles.inputStyle} >
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 1" value={teamOnePlayer1}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer1(text);
-                        }}/>
-
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 2" value={teamOnePlayer2}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer2(text);
-                        }}/>
-
+                  <View style={styles.inputStyle} >
+                  <Text style={styles.brandText}> {JSON.stringify(teamOnePlayerNames)}</Text>
+                        {['One','Two','Three', 'Four'].map(num => 
+                            <TextInput key={num}
+                              style={styles.textInput}
+                              returnKeyType={'next'}
+                              autoFocus = {true}
+                              placeholder="Test " value={teamOnePlayerNames[`teamOnePlayer${num}`]}
+                              onChangeText={(text) => {
+                            updateTeamOnePlayers(`teamOnePlayer${num}`, text);
+                          }}/>
+                          
+                          )
+                      
+                    }
+             
                     </View>
-                    <View style={styles.inputStyle} >
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 3" value={teamOnePlayer3}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer3(text);
-                        }}/>
-
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 4" value={teamOnePlayer4}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer4(text);
-                        }}/>
                     </View>
-                </View>
-
-                <Text style={styles.textLabel}> Team {teamTwo} Player names:  </Text>
+                  <Text style={styles.textLabel}> Team {teamTwo} Player names:  </Text>
                   <View style={{flexDirection:"row"}}>
                     <View style={styles.inputStyle} >
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 1" value={teamOnePlayer1}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer1(text);
-                        }}/>
-
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 2" value={teamOnePlayer2}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer2(text);
-                        }}/>
-
-                    </View>
-                    <View style={styles.inputStyle} >
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 3" value={teamOnePlayer3}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer3(text);
-                        }}/>
-
-                    <TextInput 
-                        style={styles.textInput}
-                        returnKeyType={'done'}
-                        placeholder="Player 4" value={teamOnePlayer4}
-                        onChangeText={(text) => {
-                          setTeamOnePlayer4(text);
-                        }}/>
-                    </View>
+                  <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text>
+                       {['One','Two','Three', 'Four'].map(num => 
+                            <TextInput key={num}
+                              style={styles.textInput}
+                              returnKeyType={'done'}
+                              autoFocus = {true}
+                              placeholder="Test " value={teamTwoPlayerNames[`teamTwoPlayer${num}`]}
+                              onChangeText={(text) => {
+                            updateTeamTwoPlayers(`teamTwoPlayer${num}`, text);
+                          }}/>
+                          
+                          )
+                    }
+                    </View>                            
                 </View>
 
                 <Pressable style={styles.button} onPress={() => {  
-                   storeTeamOnePlayers.push(teamOnePlayer1, teamOnePlayer2, teamOnePlayer3, teamOnePlayer4);
-                    create(competitionName, rink,teamOne,teamTwo,storeTeamOnePlayers, navigation.navigate("Previous Games"));
+                    create(competitionName, rink,teamOne,teamTwo,teamOnePlayerNames,teamTwoPlayerNames, navigation.navigate("Previous Games"));
                 }}>
                   <Text style={styles.buttonText}> Submit</Text>
                 </Pressable>

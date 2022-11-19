@@ -12,6 +12,8 @@ let initialGames = []
 const reducer = (state, action) => {
   switch (action.type) {
       case actionTypes.create:
+        console.log(action.payload)
+        console.log("Test")
           return[
               ...state,
               {
@@ -20,13 +22,39 @@ const reducer = (state, action) => {
                 rink:action.payload.rink,
                 teamOne:action.payload.teamOne,
                 teamTwo:action.payload.teamTwo,
-                teamOnePlayers:action.payload.teamOnePlayers,
-                teamTwoPlayers:action.payload.teamTwoPlayers,
-
-                date: new Date().toUTCString()
+                teamOnePlayerNames:action.payload.teamOnePlayerNames,
+                teamTwoPlayerNames:action.payload.teamTwoPlayerNames,
+                date: new Date().toUTCString(),
+                teamOneScore: [],
+                teamTwoScore:[]
   
               }
           ];
+
+        case actionTypes.score:
+        console.log(action.payload)
+        console.log("Test")
+          console.log("Find the game")
+          console.log(state);
+          console.log(action.payload)
+            
+            if(action.payload.team === 1 ) {
+              state.find(game => game.id === action.payload.id ).teamOneScore = [...state.find(game => game.id === action.payload.id ).teamOneScore, action.payload.score];
+              state.find(game => game.id === action.payload.id ).teamTwoScore = [...state.find(game => game.id === action.payload.id ).teamTwoScore, 0];
+
+             } else if ( action.payload.team === 2 ){
+              state.find(game => game.id === action.payload.id ).teamTwoScore = [...state.find(game => game.id === action.payload.id ).teamTwoScore, action.payload.score];
+              state.find(game => game.id === action.payload.id ).teamOneScore = [...state.find(game => game.id === action.payload.id ).teamOneScore, 0];
+             }
+
+        
+              //  teamOneScore: [4],
+              //  teamTwoScore:[1]   
+              console.log("score for team 1")
+              console.log(state.find(game => game.id === action.payload.id ).teamOneScore)
+              console.log("score for team 2")
+              console.log(state.find(game => game.id === action.payload.id ).teamTwoScore)
+              return state;
 
           case actionTypes.save:
             try {
@@ -44,8 +72,10 @@ const reducer = (state, action) => {
                 rink:action.payload.rink,
                 teamOne:action.teamOne,
                 teamTwo:action.teamTwo,
-                teamOnePlayers:action.teamOnePlayers,
-                teamTwoPlayers:action.teamTwoPlayers,
+                teamOnePlayerNames:action.teamOnePlayerNames,
+                teamTwoPlayerNames:action.teamTwoPlayerNames,
+
+
                 date: new Date()
               }
             ]
@@ -79,8 +109,12 @@ export const GameProvider = ({children})  => {
     loadStorage();
   }, [STORAGE_KEY])
   
-  const addGame = (competitionName, rink, teamOne, teamTwo,teamOnePlayers, callback) => {
-    dispatch({type: actionTypes.create, payload: {competitionName, rink, teamOne, teamTwo,teamOnePlayers}});
+  const addGame = (competitionName, rink, teamOne, teamTwo,teamOnePlayerNames,teamTwoPlayerNames, callback) => {
+    console.log(teamOnePlayerNames)
+    console.log("Team Players")
+    console.log(teamTwoPlayerNames)
+   
+    dispatch({type: actionTypes.create, payload: {competitionName, rink, teamOne, teamTwo,teamOnePlayerNames, teamTwoPlayerNames}});
     dispatch({type: actionTypes.save});
     if(callback) {
       callback();
@@ -88,7 +122,7 @@ export const GameProvider = ({children})  => {
   };
 
 
-  const updateGame = (id, competitionName, rink, teamOne, teamTwo,teamOnePlayers,date, callback) => {
+  const updateGame = (id, competitionName, rink, teamOne, teamTwo, teamPlayerNames,date, callback) => {
     dispatch({type: actionTypes.update, payload: {id, competitionName,rink}});
     dispatch({type: actionTypes.save});
     if(callback) callback();
@@ -101,13 +135,23 @@ const deleteGame = (id, callback) => {
     if(callback) callback();
     
   };
+
+  const addScore = (id, team, score , callback) => {
+    dispatch({type: actionTypes.score, payload: {id,team, score }});
+    console.log("team score one")
+    console.log(team)
+    console.log(score)
+
+  }
+ 
  
   return (
     <GameContext.Provider value={{
       state:state, 
       create:addGame,
       remove:deleteGame,
-      update:updateGame
+      update:updateGame,
+      addScore:addScore,
       }}>
       {children}
     </GameContext.Provider>

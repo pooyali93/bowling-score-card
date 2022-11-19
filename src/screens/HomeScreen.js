@@ -1,17 +1,20 @@
-import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { Ionicons } from '@expo/vector-icons';
 
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.brandText}> Welcome to Caterham Bowling Club</Text>
       <Image  style={styles.logo} source={require('../img/logo.png')} /> 
       <Text style={styles.heroText}> Active since 1911</Text>
-      <StatusBar style="auto" />
-    </View>
 
+          <Pressable onPress={() => navigation.navigate('Score' , {id:id})}>
+              <Ionicons name="add-circle" style={{paddingRight:10,}}size={28} color="black" />
+          </Pressable>
+    </View>
   );
 }
 

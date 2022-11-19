@@ -7,6 +7,8 @@ import GameContext from "../context/GameContext";
 
 const LoadGames = ({navigation}) => {
     const {state, remove} = useContext(GameContext);
+    console.log("Print Staye ")
+    console.log(state)
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -22,7 +24,10 @@ const LoadGames = ({navigation}) => {
                 data={state}
                 keyExtractor={(e) => e.id.toString()}
                 renderItem={({item}) =>  {
-                return (
+                    console.log("returning Iteams")
+                    console.log(item)
+                 return (
+                    
                     <Pressable onPress={() => navigation.navigate('View Games', { 
                         id: item.id,
                         competitionName: item.competitionName,
@@ -30,10 +35,8 @@ const LoadGames = ({navigation}) => {
                         date: new Date(),
                         teamOne: item.teamOne,
                         teamTwo: item.teamTwo,
-                        teamOnePlayers: item.teamOnePlayers,
-                        teamTwoPlayers: item.teamTwoPlayers,
-
-                        
+                        teamOnePlayerNames: item.teamOnePlayerNames,
+                        teamTwoPlayerNames: item.teamTwoPlayerNames,                      
                      } )}>
                     <View style={styles.itemContainer}>
                             <Text style={styles.itemContainer}> 

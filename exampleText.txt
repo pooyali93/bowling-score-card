@@ -32,3 +32,86 @@ date picker
                   />
 
                   </View>
+
+
+
+<Stack.Screen name="View Games" component={ViewGames} />
+
+
+
+creating playersname in Create game
+
+<View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 1" value={teamOnePlayer1}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer1(text);
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 2" value={teamOnePlayer2}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer2(text);
+                        }}/>
+
+                    </View>
+                    <View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 3" value={teamOnePlayer3}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer3(text);
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 4" value={teamOnePlayer4}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer4(text);
+                        }}/>
+                    </View>
+                </View>
+
+                <Text style={styles.textLabel}> Team {teamTwo} Player names:  </Text>
+                  <View style={{flexDirection:"row"}}>
+                    <View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 1" value={teamTwoPlayer1}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer1(text)
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 2" value={teamTwoPlayer2}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer2(text);
+                        }}/>
+
+                    </View>
+                    <View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 3" value={teamTwoPlayer3}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer3(text);
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 4" value={teamTwoPlayer4}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer4(text);
+                        }}/>
+                    </View>

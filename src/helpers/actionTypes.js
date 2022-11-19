@@ -4,5 +4,6 @@ export const actionTypes = {
     delete: 'Delete',
     save: 'Save',
     load: 'Save',
+    score: 'Score'
     
 };

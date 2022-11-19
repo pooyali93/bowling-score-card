@@ -1,21 +1,45 @@
 import React from 'react';
-import {View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet, Button } from 'react-native';
 
-const ViewGames = ({route}) => {
-    const {id,competitionName, rink, teamOne, teamOnePlayers, teamTwo,date} = route.params;
+const ViewGames = ({route, navigation}) => {   
+
+    const {id,competitionName, rink, teamOne,teamOnePlayerNames,teamTwoPlayerNames, teamTwo,date} = route.params;
+    console.log("")
+    console.log(route.params)
   return (
        <View style={styles.itemContainer}>
             <Text>ID: {id}</Text>
             <Text>Competition name: {competitionName}</Text>
             <Text>Rink No: {rink}</Text>
             <Text>Team: {teamOne}</Text>
-            <Text>{teamOne} Players: </Text>
-            <Text>1st player name: {teamOnePlayers[0]}</Text>
-            <Text>2nd player name: {teamOnePlayers[1]}</Text>
-            <Text>3rd player name: {teamOnePlayers[2]}</Text>
-            <Text>4th player name: {teamOnePlayers[3]}</Text>
+            {console.log("View team players")}
+            {console.log(teamOnePlayerNames)}
+            {console.log(teamTwoPlayerNames)}
+            {Object.keys(teamOnePlayerNames).map(item => {
+               return( 
+                <View>
+                    <Text>{teamOne} Players {teamOnePlayerNames[item]}</Text>
+                    {console.log("Player")}
+                    {console.log(teamOnePlayerNames[item])
+                    }      
+               </View>  
+             )
+            })}
+            {Object.keys(teamTwoPlayerNames).map(item => {
+               return( 
+                <View>
+                    <Text>{teamTwo} Players {teamTwoPlayerNames[item]}</Text>
+                    {console.log("Player")}
+                    {console.log(teamTwoPlayerNames[item])
+                    }      
+               </View>  
+             )
+            })}
             <Text>Team B: {teamTwo}</Text>
             <Text>Date: {new Date(date).toLocaleDateString()}</Text>
+            <Text style={styles.brandText}> {JSON.stringify(teamOnePlayerNames)}</Text>
+
+            <Button  title="Start Game"onPress={() => navigation.navigate('Score' , {id:id})}/>
   
        </View>
   );
