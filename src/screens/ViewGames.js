@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Button } from 'react-native';
 
 const ViewGames = ({route, navigation}) => {   
 
-    const {id,competitionName, rink, teamOne,teamOnePlayerNames,teamTwoPlayerNames, teamTwo,date} = route.params;
+    const {id,competitionName, rink, teamOne,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour, teamTwo,date} = route.params;
     console.log("")
     console.log(route.params)
   return (
@@ -12,32 +12,23 @@ const ViewGames = ({route, navigation}) => {
             <Text>Competition name: {competitionName}</Text>
             <Text>Rink No: {rink}</Text>
             <Text>Team: {teamOne}</Text>
-            {console.log("View team players")}
-            {console.log(teamOnePlayerNames)}
-            {console.log(teamTwoPlayerNames)}
-            {Object.keys(teamOnePlayerNames).map(item => {
-               return( 
-                <View>
-                    <Text>{teamOne} Players {teamOnePlayerNames[item]}</Text>
-                    {console.log("Player")}
-                    {console.log(teamOnePlayerNames[item])
-                    }      
-               </View>  
-             )
-            })}
-            {Object.keys(teamTwoPlayerNames).map(item => {
-               return( 
-                <View>
-                    <Text>{teamTwo} Players {teamTwoPlayerNames[item]}</Text>
-                    {console.log("Player")}
-                    {console.log(teamTwoPlayerNames[item])
-                    }      
-               </View>  
-             )
-            })}
             <Text>Team B: {teamTwo}</Text>
+            <View>
+              <Text>{teamOne} Players</Text>
+              <Text>Player 1 {teamOnePlayerOne}</Text>
+              <Text>Player 2 {teamOnePlayerTwo}</Text>
+              <Text>Player 3 {teamOnePlayerThree}</Text>
+              <Text>Player 4 {teamOnePlayerFour}</Text>
+            </View>
+            <View>
+              <Text>{teamTwo} Players</Text>
+              <Text>Player 1 {teamTwoPlayerOne}</Text>
+              <Text>Player 2 {teamTwoPlayerTwo}</Text>
+              <Text>Player 3 {teamTwoPlayerThree}</Text>
+              <Text>Player 4 {teamTwoPlayerFour}</Text>
+            </View>
             <Text>Date: {new Date(date).toLocaleDateString()}</Text>
-            <Text style={styles.brandText}> {JSON.stringify(teamOnePlayerNames)}</Text>
+            <Text style={styles.brandText}> {JSON.stringify(teamOnePlayerOne)}</Text>
 
             <Button  title="Start Game"onPress={() => navigation.navigate('Score' , {id:id})}/>
   

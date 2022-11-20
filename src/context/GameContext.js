@@ -22,8 +22,14 @@ const reducer = (state, action) => {
                 rink:action.payload.rink,
                 teamOne:action.payload.teamOne,
                 teamTwo:action.payload.teamTwo,
-                teamOnePlayerNames:action.payload.teamOnePlayerNames,
-                teamTwoPlayerNames:action.payload.teamTwoPlayerNames,
+                teamOnePlayerOne:action.payload.teamOnePlayerOne,
+                teamOnePlayerTwo:action.payload.teamOnePlayerTwo,
+                teamOnePlayerThree:action.payload.teamOnePlayerThree,
+                teamOnePlayerFour:action.payload.teamOnePlayerFour,
+                teamTwoPlayerOne:action.payload.teamTwoPlayerOne,
+                teamTwoPlayerTwo:action.payload.teamTwoPlayerTwo,
+                teamTwoPlayerThree:action.payload.teamTwoPlayerThree,
+                teamTwoPlayerFour:action.payload.teamTwoPlayerFour,
                 date: new Date().toUTCString(),
                 teamOneScore: [],
                 teamTwoScore:[]
@@ -72,10 +78,14 @@ const reducer = (state, action) => {
                 rink:action.payload.rink,
                 teamOne:action.teamOne,
                 teamTwo:action.teamTwo,
-                teamOnePlayerNames:action.teamOnePlayerNames,
-                teamTwoPlayerNames:action.teamTwoPlayerNames,
-
-
+                teamOnePlayerOne:action.teamOnePlayerOne,
+                teamOnePlayerTwo:action.teamOnePlayerTwo,
+                teamOnePlayerThree:action.teamOnePlayerThree,
+                teamOnePlayerFour:action.teamOnePlayerFour,
+                teamTwoPlayerOne:action.teamTwoPlayerOne,
+                teamTwoPlayerTwo:action.teamTwoPlayerTwo,
+                teamTwoPlayerThree:action.teamTwoPlayerThree,
+                teamTwoPlayerFour:action.teamTwoPlayerFour,
                 date: new Date()
               }
             ]
@@ -109,12 +119,12 @@ export const GameProvider = ({children})  => {
     loadStorage();
   }, [STORAGE_KEY])
   
-  const addGame = (competitionName, rink, teamOne, teamTwo,teamOnePlayerNames,teamTwoPlayerNames, callback) => {
-    console.log(teamOnePlayerNames)
+  const addGame = (competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour, callback) => {
+    console.log(teamOnePlayerOne)
     console.log("Team Players")
-    console.log(teamTwoPlayerNames)
+    console.log(teamTwoPlayerOne)
    
-    dispatch({type: actionTypes.create, payload: {competitionName, rink, teamOne, teamTwo,teamOnePlayerNames, teamTwoPlayerNames}});
+    dispatch({type: actionTypes.create, payload: {competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour}});
     dispatch({type: actionTypes.save});
     if(callback) {
       callback();
@@ -122,8 +132,8 @@ export const GameProvider = ({children})  => {
   };
 
 
-  const updateGame = (id, competitionName, rink, teamOne, teamTwo, teamPlayerNames,date, callback) => {
-    dispatch({type: actionTypes.update, payload: {id, competitionName,rink}});
+  const updateGame = (id, competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour,date, callback) => {
+    dispatch({type: actionTypes.update, payload: {id, competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour,date}});
     dispatch({type: actionTypes.save});
     if(callback) callback();
     

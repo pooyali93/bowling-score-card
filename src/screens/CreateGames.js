@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, Button , SafeAreaView, StatusBar, Keyboard} from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from '@expo/vector-icons';
@@ -9,21 +9,24 @@ import COLORS from '../context/Colors';
 
 const CreateGames = ({navigation}) => {
   const {create} = useContext(GameContext);
-  const [competitionName, setCompetitionName] = useState("");
-  const [rink, setRink] = useState("");
-  const [date, setDate] = useState("");
-  const [teamOne, setTeamOne] = useState("");
-  const [teamTwo, setTeamTwo] = useState("");
+  const [numOfPlayers, setNumOfPlayers] = useState([])
 
-  //Team Player hooks 
-  const [teamOnePlayerNames, setTeamOnePlayerNames] = useState([]);
-  const updateTeamOnePlayers = (path, value) => {
-    setTeamOnePlayerNames({...teamOnePlayerNames, [path]: value});
-  };
+  // const [competitionName, setCompetitionName] = useState("");
+  // const [rink, setRink] = useState("");
+  // const [date, setDate] = useState("");
+  // const [teamOne, setTeamOne] = useState("");
+  // const [teamTwo, setTeamTwo] = useState("");
+
+  // //Team Player hooks 
+  // const [teamOnePlayerNames, setTeamOnePlayerNames] = useState([]);
+  // const updateTeamOnePlayers = (path, value) => {
+  //   setTeamOnePlayerNames({...teamOnePlayerNames, [path]: value});
+  // };
   const [teamTwoPlayerNames, setTeamTwoPlayerNames] = useState([]);
-  const updateTeamTwoPlayers= (path, value) => {
+   const updateTeamTwoPlayers= (path, value) => {
     setTeamTwoPlayerNames({...teamTwoPlayerNames, [path]: value});
-  };
+   };
+
 
   const [selectedDate, setSelectedDate] = useState();
   const [datePickerVisible, setDatePickerVisible] = useState(false);
@@ -73,19 +76,30 @@ const CreateGames = ({navigation}) => {
       handleError("Please input first players name", 'teamOnePlayerOne');
     }
     if(!inputs.teamTwoPlayerOne){
-      handleError("Please input first players name", 'teamOnePlayerTwo');
+      handleError("Please input first players name", 'teamTwoPlayerTwo');
     }
-
-
-  
     else {
-    create(inputs.competitionName, inputs.rink,inputs.teamOne,inputs.teamTwo, inputs.teamOnePlayerOne, inputs.teamOnePlayerTwo,inputs.teamTwoPlayerOne, inputs.teamTwoPlayerTwo ,navigation.navigate("Previous Games"));
+    create(
+      inputs.competitionName, 
+      inputs.rink,
+      inputs.teamOne,
+      inputs.teamTwo, 
+      inputs.teamOnePlayerOne, 
+      inputs.teamOnePlayerTwo,
+      inputs.teamOnePlayerThree,
+      inputs.teamOnePlayerFour,
+      inputs.teamTwoPlayerOne, 
+      inputs.teamTwoPlayerTwo,
+      inputs.teamTwoPlayerThree,
+      inputs.teamTwoPlayerFour,
+      navigation.navigate("Previous Games"));
     }
   }; 
 
   const handleOnChange = (text, input) => {
     setInputs(prevState =>({...prevState, [input]: text}));
-    
+    console.log("print text")
+    console.log(text)
 
   };
 
@@ -93,7 +107,12 @@ const CreateGames = ({navigation}) => {
     setError(prevState =>({...prevState, [input]: errorMessage }))
   };
   console.log("inputs")
-  console.log(inputs)
+  console.log(inputs.teamOnePlayerOne)
+
+  useEffect (() => {
+
+
+  },[numOfPlayers]) 
 
     return (
       <SafeAreaView style={styles.container}>
@@ -105,7 +124,7 @@ const CreateGames = ({navigation}) => {
               label="Competition" 
               placeholder="Enter competition name"
               returnKeyType={'done'}
-              error={error.competitionName}
+              // error={error.competitionName}
               onChangeText={(text) => handleOnChange(text, 'competitionName' )}
               />
             
@@ -114,7 +133,7 @@ const CreateGames = ({navigation}) => {
               keyboardType="numeric"
               returnKeyType={'done'}
               placeholder="Type rink number"
-              error={error.rink}
+              // error={error.rink}
               onChangeText={(text) => handleOnChange(text, 'rink' )}
               />
 
@@ -122,7 +141,7 @@ const CreateGames = ({navigation}) => {
                 label="First team name" 
                 returnKeyType={'done'}
                 placeholder="Enter team name" 
-                error={error.teamOne}
+                // error={error.teamOne}
                 onChangeText={(text) => handleOnChange(text, 'teamOne' )}
               />
 
@@ -130,7 +149,7 @@ const CreateGames = ({navigation}) => {
                 label="Second team name" 
                 returnKeyType={'next'}
                 placeholder="Enter team name" 
-                error={error.teamTwo}
+                // error={error.teamTwo}
                 onChangeText={(text) => handleOnChange(text, 'teamTwo' )}
                 />
 
@@ -149,15 +168,32 @@ const CreateGames = ({navigation}) => {
                   onCancel={hideDatePicker}
                   />
                <Ionicons  name="calendar-sharp" size={32} style={styles.icon} color="black" onPress={showDatePicker}/>
-            </View>
-                  
+            </View> 
+            
+            
+            
+               <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text>
                       <Input 
                       label="First team Players"
                         returnKeyType={'next'}
+                        // autoFocus = {true}
+                        id="ftPlayer1"
+                        placeholder="Type first team players name"
+                        onChangeText={(text) => handleOnChange(text, 'teamOnePlayerOne')}
+
+                        />  
+                                  
+                       <Input 
+                        returnKeyType={'next'}
                         autoFocus = {true}
                         placeholder="Type first team players name"
-                        error={error.teamOnePlayerOne}
-                        onChangeText={(text) => handleOnChange(text, 'teamOnePlayerOne')}
+                        onChangeText={(text) => handleOnChange(text, 'teamOnePlayerTwo')}                      
+                        />
+                        <Input 
+                        returnKeyType={'next'}
+                        autoFocus = {true}
+                        placeholder="Type first team players name"
+                        onChangeText={(text) => handleOnChange(text, 'teamOnePlayerThree')}
                         
                        
                         />                 
@@ -165,47 +201,53 @@ const CreateGames = ({navigation}) => {
                         returnKeyType={'next'}
                         autoFocus = {true}
                         placeholder="Type first team players name"
-                        error={error.teamOnePlayerTwo}
-                        onChangeText={(text) => handleOnChange(text, 'teamOnePlayerTwo')}                      
+                        onChangeText={(text) => handleOnChange(text, 'teamOnePlayerFour')}                      
                         />
-
-  
-                    {/* <Text style={styles.brandText}> {JSON.stringify(teamOnePlayerOne)}</Text> */}
-                      {/* <Text style={styles.textLabel}> Team {teamTwo} Player names:  </Text>
-                            {['One','Two','Three', 'Four'].map(num => 
-                                <Input key={num}
-                                  returnKeyType={'done'}
-                                  autoFocus = {true}
-                                  placeholder="Type players name" value={teamTwoPlayerNames[`teamTwoPlayer${num}`]}
-                                  onChangeText={(text) => {
-                                updateTeamTwoPlayers(`teamTwoPlayer${num}`, text);
-                              }}/>
-                              
-                              )
-                        }
-                        <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text> */}             
                       <Input 
                         label="Second team players"
                         returnKeyType={'next'}
                         autoFocus = {true}
                         placeholder="Type second team players name"
-                        error={error.teamTwoPlayerOne}
+                        id="stPlayer2"
                         onChangeText={(text) => handleOnChange(text, 'teamTwoPlayerOne')}
+                        />
+                   
+                       <Input 
+                        returnKeyType={'next'}
+                        autoFocus = {true}
+                        placeholder="Type second team players name"
+                        onChangeText={(text) => handleOnChange(text, 'teamTwoPlayerTwo')}
+                        />
+                        <Input 
+                        returnKeyType={'next'}
+                        autoFocus = {true}
+                        placeholder="Type second team players name"
+                        onChangeText={(text) => handleOnChange(text, 'teamTwoPlayerThree')}
                         />
                    
                       <Input 
                         returnKeyType={'next'}
                         autoFocus = {true}
                         placeholder="Type second team players name"
-                        error={error.teamTwoPlayerTwo}
-                        onChangeText={(text) => handleOnChange(text, 'teamTwoPlayerTwo')}
-
-                       
-                        />
-
+                        onChangeText={(text) => handleOnChange(text, 'teamTwoPlayerFour')}
+                        /> 
             <Buttons title="Submit" onPress={() => { 
               validate() 
-                
+              create(
+                inputs.competitionName, 
+                inputs.rink,
+                inputs.teamOne,
+                inputs.teamTwo, 
+                inputs.teamOnePlayerOne, 
+                inputs.teamOnePlayerTwo,
+                inputs.teamOnePlayerThree,
+                inputs.teamOnePlayerFour,
+                inputs.teamTwoPlayerOne, 
+                inputs.teamTwoPlayerTwo,
+                inputs.teamTwoPlayerThree,
+                inputs.teamTwoPlayerFour,
+                navigation.navigate("Previous Games"));
+              
                 }}
             />
 

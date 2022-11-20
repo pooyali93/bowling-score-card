@@ -13,7 +13,7 @@ const Buttons = ({title , onPress=() => {}}) => {
                 backgroundColor:COLORS.lightblue,
                 justifyContent:'center',
                 alignItems:'center',
-                marginVertical:20
+                marginVertical:5
             }}>
                 <Text style={{color:COLORS.white, fontWeight:'bold', fontSize:16}}>{title}</Text>
             </TouchableOpacity>

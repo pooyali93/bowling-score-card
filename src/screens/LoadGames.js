@@ -35,8 +35,14 @@ const LoadGames = ({navigation}) => {
                         date: new Date(),
                         teamOne: item.teamOne,
                         teamTwo: item.teamTwo,
-                        teamOnePlayerNames: item.teamOnePlayerNames,
-                        teamTwoPlayerNames: item.teamTwoPlayerNames,                      
+                        teamOnePlayerOne: item.teamOnePlayerOne,
+                        teamOnePlayerTwo: item.teamOnePlayerTwo,
+                        teamOnePlayerThree: item.teamOnePlayerThree,
+                        teamOnePlayerFour: item.teamOnePlayerFour,
+                        teamTwoPlayerOne: item.teamTwoPlayerOne,                      
+                        teamTwoPlayerTwo: item.teamTwoPlayerTwo,                      
+                        teamTwoPlayerThree: item.teamTwoPlayerThree,                      
+                        teamTwoPlayerFour: item.teamTwoPlayerFour,                      
                      } )}>
                     <View style={styles.itemContainer}>
                             <Text style={styles.itemContainer}> 
