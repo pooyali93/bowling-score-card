@@ -1,0 +1,133 @@
+date picker 
+<View style={styles.dateContainer} >
+    <DateTimePickerModal
+    isVisible={datePickerVisible}
+    mode="date"
+    locale="en_GB"
+    onConfirm={handleConfirm}
+    onCancel={hideDatePicker}
+    />
+<Text style={styles.inputStyle}>
+{selectedDate ? selectedDate.toLocaleDateString() : 'Select a date'}
+</Text>
+<MaterialIcons name="date-range" size={32} style={{alignSelf:'center'}} color="black" onPress={showDatePicker}/>
+</View>
+
+
+
+ <View>
+                  <Button title='+ 'onPress={() => 
+                     {
+                      teamOnePlayers.map((item, i) => {
+
+                          <TextInput
+                            onChange={handleChange}
+                            value={item.value}
+                            id={i}
+                            type={item.type}
+                            size="40"
+                          />
+                     })}
+                    }
+                  />
+
+                  </View>
+
+
+
+<Stack.Screen name="View Games" component={ViewGames} />
+
+
+
+creating playersname in Create game
+
+<View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 1" value={teamOnePlayer1}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer1(text);
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 2" value={teamOnePlayer2}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer2(text);
+                        }}/>
+
+                    </View>
+                    <View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 3" value={teamOnePlayer3}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer3(text);
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 4" value={teamOnePlayer4}
+                        onChangeText={(text) => {
+                          setTeamOnePlayer4(text);
+                        }}/>
+                    </View>
+                </View>
+
+                <Text style={styles.textLabel}> Team {teamTwo} Player names:  </Text>
+                  <View style={{flexDirection:"row"}}>
+                    <View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 1" value={teamTwoPlayer1}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer1(text)
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 2" value={teamTwoPlayer2}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer2(text);
+                        }}/>
+
+                    </View>
+                    <View style={styles.inputStyle} >
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 3" value={teamTwoPlayer3}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer3(text);
+                        }}/>
+
+                    <TextInput 
+                        style={styles.textInput}
+                        returnKeyType={'done'}
+                        placeholder="Player 4" value={teamTwoPlayer4}
+                        onChangeText={(text) => {
+                          setTeamTwoPlayer4(text);
+                        }}/>
+                    </View>
+
+
+{/* <Text style={styles.brandText}> {JSON.stringify(teamOnePlayerOne)}</Text> */}
+                      {/* <Text style={styles.textLabel}> Team {teamTwo} Player names:  </Text>
+                            {['One','Two','Three', 'Four'].map(num => 
+                                <Input key={num}
+                                  returnKeyType={'done'}
+                                  autoFocus = {true}
+                                  placeholder="Type players name" value={teamTwoPlayerNames[`teamTwoPlayer${num}`]}
+                                  onChangeText={(text) => {
+                                updateTeamTwoPlayers(`teamTwoPlayer${num}`, text);
+                              }}/>
+                              
+                              )
+                        }
+                        <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text> */}  

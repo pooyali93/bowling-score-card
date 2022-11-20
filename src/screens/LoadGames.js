@@ -1,17 +1,19 @@
 import { useEffect, useContext} from "react";
 import { View, StyleSheet, Text, FlatList, Pressable} from "react-native"
-import {MaterialIcons} from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 import GameContext from "../context/GameContext";
 
 
 
 const LoadGames = ({navigation}) => {
     const {state, remove} = useContext(GameContext);
+    // console.log("Print State ")
+    // console.log(state)
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Pressable onPress={() => navigation.navigate('Create Game')}>
-                    <MaterialIcons name='add' size={28} color="black" />
+                <Pressable onPress={() => navigation.navigate('Create Games')}>
+                   <Ionicons name="add-circle" style={{paddingRight:10,}}size={28} color="black" />
                 </Pressable>
             )
         })
@@ -22,18 +24,25 @@ const LoadGames = ({navigation}) => {
                 data={state}
                 keyExtractor={(e) => e.id.toString()}
                 renderItem={({item}) =>  {
-                return (
-                    <Pressable onPress={() => navigation.navigate('ViewGames', { 
+                    // console.log("returning Iteams")
+                    // console.log(item)
+                 return (
+                    
+                    <Pressable onPress={() => navigation.navigate('View Games', { 
                         id: item.id,
                         competitionName: item.competitionName,
                         rink: item.rink,
                         date: new Date(),
                         teamOne: item.teamOne,
                         teamTwo: item.teamTwo,
-                        teamOnePlayers: item.teamOnePlayers,
-                        teamTwoPlayers: item.teamTwoPlayers,
-
-                        
+                        teamOnePlayerOne: item.teamOnePlayerOne,
+                        teamOnePlayerTwo: item.teamOnePlayerTwo,
+                        teamOnePlayerThree: item.teamOnePlayerThree,
+                        teamOnePlayerFour: item.teamOnePlayerFour,
+                        teamTwoPlayerOne: item.teamTwoPlayerOne,                      
+                        teamTwoPlayerTwo: item.teamTwoPlayerTwo,                      
+                        teamTwoPlayerThree: item.teamTwoPlayerThree,                      
+                        teamTwoPlayerFour: item.teamTwoPlayerFour,                      
                      } )}>
                     <View style={styles.itemContainer}>
                             <Text style={styles.itemContainer}> 
@@ -43,7 +52,7 @@ const LoadGames = ({navigation}) => {
                                 {item.date = new Date().toLocaleDateString()}
                             </Text>
                         <Pressable onPress={() => {remove(item.id)}}>
-                            <MaterialIcons name='delete' size={28} color="red" />
+                            <Ionicons name='trash' size={28} color="red" />
                         </Pressable>
                     </View>
                     
