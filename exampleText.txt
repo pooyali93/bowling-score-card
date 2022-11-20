@@ -115,3 +115,19 @@ creating playersname in Create game
                           setTeamTwoPlayer4(text);
                         }}/>
                     </View>
+
+
+{/* <Text style={styles.brandText}> {JSON.stringify(teamOnePlayerOne)}</Text> */}
+                      {/* <Text style={styles.textLabel}> Team {teamTwo} Player names:  </Text>
+                            {['One','Two','Three', 'Four'].map(num => 
+                                <Input key={num}
+                                  returnKeyType={'done'}
+                                  autoFocus = {true}
+                                  placeholder="Type players name" value={teamTwoPlayerNames[`teamTwoPlayer${num}`]}
+                                  onChangeText={(text) => {
+                                updateTeamTwoPlayers(`teamTwoPlayer${num}`, text);
+                              }}/>
+                              
+                              )
+                        }
+                        <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text> */}  
