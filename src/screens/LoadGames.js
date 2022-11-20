@@ -7,8 +7,8 @@ import GameContext from "../context/GameContext";
 
 const LoadGames = ({navigation}) => {
     const {state, remove} = useContext(GameContext);
-    console.log("Print State ")
-    console.log(state)
+    // console.log("Print State ")
+    // console.log(state)
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -24,8 +24,8 @@ const LoadGames = ({navigation}) => {
                 data={state}
                 keyExtractor={(e) => e.id.toString()}
                 renderItem={({item}) =>  {
-                    console.log("returning Iteams")
-                    console.log(item)
+                    // console.log("returning Iteams")
+                    // console.log(item)
                  return (
                     
                     <Pressable onPress={() => navigation.navigate('View Games', { 

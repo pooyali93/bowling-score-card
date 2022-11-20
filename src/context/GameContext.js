@@ -12,8 +12,8 @@ let initialGames = []
 const reducer = (state, action) => {
   switch (action.type) {
       case actionTypes.create:
-        console.log(action.payload)
-        console.log("Test")
+        // console.log(action.payload)
+        // console.log("Test")
           return[
               ...state,
               {
@@ -32,17 +32,18 @@ const reducer = (state, action) => {
                 teamTwoPlayerFour:action.payload.teamTwoPlayerFour,
                 date: new Date().toUTCString(),
                 teamOneScore: [],
-                teamTwoScore:[]
+                teamTwoScore:[], 
+                totalScoreOne:0,
   
               }
           ];
 
         case actionTypes.score:
-        console.log(action.payload)
-        console.log("Test")
-          console.log("Find the game")
-          console.log(state);
-          console.log(action.payload)
+        // console.log(action.payload)
+        // console.log("Test")
+        //   console.log("Find the game")
+          // console.log(state);
+          // console.log(action.payload)
             
             if(action.payload.team === 1 ) {
               state.find(game => game.id === action.payload.id ).teamOneScore = [...state.find(game => game.id === action.payload.id ).teamOneScore, action.payload.score];
@@ -56,10 +57,10 @@ const reducer = (state, action) => {
         
               //  teamOneScore: [4],
               //  teamTwoScore:[1]   
-              console.log("score for team 1")
-              console.log(state.find(game => game.id === action.payload.id ).teamOneScore)
-              console.log("score for team 2")
-              console.log(state.find(game => game.id === action.payload.id ).teamTwoScore)
+              // console.log("score for team 1")
+              // console.log(state.find(game => game.id === action.payload.id ).teamOneScore)
+              // console.log("score for team 2")
+              // console.log(state.find(game => game.id === action.payload.id ).teamTwoScore)
               return state;
 
           case actionTypes.save:
@@ -76,17 +77,18 @@ const reducer = (state, action) => {
                 id: uuid.v4(),
                 competitionName:action.payload.competitionName,
                 rink:action.payload.rink,
-                teamOne:action.teamOne,
-                teamTwo:action.teamTwo,
-                teamOnePlayerOne:action.teamOnePlayerOne,
-                teamOnePlayerTwo:action.teamOnePlayerTwo,
-                teamOnePlayerThree:action.teamOnePlayerThree,
-                teamOnePlayerFour:action.teamOnePlayerFour,
-                teamTwoPlayerOne:action.teamTwoPlayerOne,
-                teamTwoPlayerTwo:action.teamTwoPlayerTwo,
-                teamTwoPlayerThree:action.teamTwoPlayerThree,
-                teamTwoPlayerFour:action.teamTwoPlayerFour,
-                date: new Date()
+                teamOne:action.payload.teamOne,
+                teamTwo:action.payload.teamTwo,
+                teamOnePlayerOne:action.payload.teamOnePlayerOne,
+                teamOnePlayerTwo:action.payload.teamOnePlayerTwo,
+                teamOnePlayerThree:action.payload.teamOnePlayerThree,
+                teamOnePlayerFour:action.payload.teamOnePlayerFour,
+                teamTwoPlayerOne:action.payload.teamTwoPlayerOne,
+                teamTwoPlayerTwo:action.payload.teamTwoPlayerTwo,
+                teamTwoPlayerThree:action.payload.teamTwoPlayerThree,
+                teamTwoPlayerFour:action.payload.teamTwoPlayerFour,
+                date: new Date(),
+                totalScoreOne: totalScoreOne.action.payload.totalScoreOne,
               }
             ]
           case actionTypes.update:
@@ -120,9 +122,9 @@ export const GameProvider = ({children})  => {
   }, [STORAGE_KEY])
   
   const addGame = (competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour, callback) => {
-    console.log(teamOnePlayerOne)
-    console.log("Team Players")
-    console.log(teamTwoPlayerOne)
+    // console.log(teamOnePlayerOne)
+    // console.log("Team Players")
+    // console.log(teamTwoPlayerOne)
    
     dispatch({type: actionTypes.create, payload: {competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour}});
     dispatch({type: actionTypes.save});
@@ -148,11 +150,21 @@ const deleteGame = (id, callback) => {
 
   const addScore = (id, team, score , callback) => {
     dispatch({type: actionTypes.score, payload: {id,team, score }});
-    console.log("team score one")
-    console.log(team)
-    console.log(score)
+    // console.log("team score one")
+    // console.log(team)
+    // console.log(score)
 
   }
+
+  const updateTotalOne = (id, totalScoreOne, callback) => {
+    dispatch({type: actionTypes.update, payload: {id, totalScoreOne }});
+    // console.log(`Testing Team A ${totalScoreOne}`)
+
+  }
+
+  
+
+
  
  
   return (
@@ -162,6 +174,7 @@ const deleteGame = (id, callback) => {
       remove:deleteGame,
       update:updateGame,
       addScore:addScore,
+      updateTotalOne:updateTotalOne
       }}>
       {children}
     </GameContext.Provider>

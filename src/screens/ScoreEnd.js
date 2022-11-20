@@ -7,48 +7,51 @@ import Buttons from '../components/Buttons';
 
 const ScoreEnd = ({navigation,route}) => {
 
-    const {state, addScore}= useContext(GameContext)
+    const {state, addScore,updateTotalOne}= useContext(GameContext)
     const {id} = route.params;
     const [score , setScore] = useState(0)
     const [current, setCurrent ] = useState()
     const teamOneScore = 1;
     const teamTwoScore = 2;
-    const PlayGame = state.find(game => 
-        game.id === id
+    const PlayGame = state.find(game => game.id === id )
 
-    )
 
-    const currentEnd = PlayGame.teamOneScore.length+1; 
-    
+   // const currentEnd = PlayGame.teamOneScore.length; 
+    let currentEnd = 1; 
 
     const addEnds =(team, score) => {
-        setCurrent(PlayGame.teamOneScore.length);
+       // setCurrent(PlayGame.teamOneScore.length);
         if (currentEnd === 8) {
             Alert.alert("Game Over")
         }
         else {
             {addScore(id, team, score)}
-            setCurrent(PlayGame.teamOneScore.length);
+            if (PlayGame.totalScoreOne != null){
+                console.log(`if statement ${PlayGame.totalScoreOne}`)
+                totalTeaA = PlayGame.totalScoreOne
+            }
+            totalTeaA = totalTeaA + score
+            console.log(`Totall score for A ${totalTeaA}`)
+            updateTotalOne (id, totalTeaA)
+           // setCurrent(PlayGame.teamOneScore.length);
         }
         
             
     };
-    
-    const totalScoreOne = state.reduce((total, score) => {
-        console.log(`Total: ${total}`)
-        console.log(`item: ${teamOneScore}`)
-         return (
-         total + score.teamOneScore.length
-            )
-    }, 0);
+
+
     const totalScoreTwo = state.reduce((total, score) => {
-        console.log(`Total: ${total}`)
-        console.log(`item: ${teamTwoScore}`)
+        // console.log(`Total: ${total}`)
+        // console.log(`item: ${teamTwoScore}`)
          return (
-         total + score.teamTwoScore.length
+         total + score.teamTwoScore
             )
     }, 0);
     // console.log(`Total: ${totalScores}`)
+
+    let totalTeaA = 0;
+
+
     
 
   return (
@@ -57,7 +60,7 @@ const ScoreEnd = ({navigation,route}) => {
             <View >
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
             <View style={styles.scoreOne}>
-                <Text style={{fontWeight:'bold', fontSize:40,textAlign:'center'}} >{totalScoreOne}</Text>
+                <Text style={{fontWeight:'bold', fontSize:40,textAlign:'center'}} >{PlayGame.totalScoreOne}</Text>
             </View>
             <View style={styles.scoreOne}>
             <Text style={{fontWeight:'bold', fontSize:40,textAlign:'center'}} > {totalScoreTwo}</Text>
