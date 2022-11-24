@@ -33,10 +33,10 @@ const LoadGames = ({navigation}) => {
                         selectedDate: item.selectedDate,                    
                      } )}>
                     <View style={styles.itemContainer}>
-                            <Text style={styles.itemContainer}> 
-                                {item.competitionName}
+                            <Text style={{fontWeight:'600',paddingRight:20, paddingVertical:10, flex:1}}>
+                                 {item.competitionName}
                             </Text>
-                            <Text style={styles.itemContainer}> 
+                            <Text style={{fontWeight:'600',padding:0,paddingVertical:10,flex:1}}>  
                                 {item.selectedDate}
                             </Text>
                         <Pressable onPress={() => {remove(item.id)}}>
@@ -58,11 +58,12 @@ const styles = StyleSheet.create({
     mainContainer: {
         marginTop:10,
         padding:10,
+        
     },
     itemContainer: {
         backgroundColor:'#ffffff',
-        marginBottom:0,
-        padding:10,
+        marginBottom:20,
+        padding:20,
         borderBottomWidth: 1,
         borderBottomColor:'#cfcfd1',
         borderTopLeftRadius:5,
@@ -71,10 +72,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems:'center'
     },
-    dateContainer: {
-        flexDirection:'column',
-        alignItems:'center'
-    },
+
     dateText: {
         fontSize:16,
     },

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useContext } from 'react';
-import { StyleSheet, Button, Text, View, Alert, SafeAreaView, StatusBar, ScrollView } from 'react-native';
+import { StyleSheet, Button, Text, View, Alert, SafeAreaView, StatusBar, ScrollView, Pressable } from 'react-native';
 import COLORS from '../context/Colors';
 import GameContext from '../context/GameContext';
 import Buttons from '../components/Buttons';
+import { Ionicons } from '@expo/vector-icons';
 
 const ScoreEnd = ({ navigation, route }) => {
     const { state, addScore } = useContext(GameContext)
@@ -106,6 +107,11 @@ const ScoreEnd = ({ navigation, route }) => {
                 </View>
                 <View style={styles.ends} >
                     <Text style={{ fontSize: 18, fontWeight: 'bold', color: COLORS.black }} >Ends:  {currentEnd}</Text>
+              
+                <Pressable onPress={() => navigation.navigate('Camera')}>
+                   <Ionicons name="camera" style={{paddingTop:10}}size={34} color="black" />
+                </Pressable>
+
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -136,8 +142,6 @@ const ScoreEnd = ({ navigation, route }) => {
 
     )
 }
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

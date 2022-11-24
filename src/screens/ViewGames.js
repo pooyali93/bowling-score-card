@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, FlatList } from 'react-native';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, FlatList, Pressable } from 'react-native';
+import { Table, Row,} from 'react-native-table-component';
 import Buttons from '../components/Buttons';
 import COLORS from '../context/Colors';
 import GameContext from '../context/GameContext';
+
 
 const ViewGames = ({ route, navigation }) => {
   const { id } = route.params;
@@ -44,7 +45,7 @@ const ViewGames = ({ route, navigation }) => {
   // console.log("current Entry length", currentEntry)
 
   if (rowsData.length !== undefined) {
-    for (let i = 0; i < currentEntry.teamOneScore.length; i++) {
+    for (let i = 1; i < currentEntry.teamOneScore.length; i++) {
       const t1score = currentEntry.teamOneScore[i]
       const t2score = currentEntry.teamTwoScore[i]
 
@@ -63,7 +64,7 @@ const ViewGames = ({ route, navigation }) => {
     <SafeAreaView style={styles.body}>
 
       <View style={styles.itemContainer}>
-        <View style={[{flexDirection: 'column', flexWrap: 'nowrap'}, styles.itemContainer]}>
+        <View style={[{flexDirection: 'row', flexWrap: 'wrap'}, styles.itemContainer]}>
           <View style={styles.col1}>
           <Text style={styles.label}>Competition:   {currentEntry.competitionName}</Text>
           </View>
@@ -96,7 +97,7 @@ const ViewGames = ({ route, navigation }) => {
                 <Text style={styles.label}>{currentEntry.teamOne} Players</Text>
               </View>
               <View style={styles.col2}>
-              <Text style={styles.label}>{currentEntry.teamOne} Players</Text>
+              <Text style={styles.label}>{currentEntry.teamTwo} Players</Text>
               </View>
           </View>
            <View style={{flexDirection: 'row'}}>
@@ -115,16 +116,19 @@ const ViewGames = ({ route, navigation }) => {
           </View>
         </View>
 
-        <View style={{flexDirection: 'row',justifyContent:'space-between',paddingBottom:20}}>
+        </View>
+
+        <View style={{flexDirection: 'row',justifyContent:'space-between',paddingBottom:0}}>
               <View style={styles.col4}>
                  <Buttons title="Edit"  onPress={() => navigation.navigate('Edit Game', { id: id })} />
               </View>
+              
               <View style={styles.col4}>
                   <Buttons title="Start Game" onPress={() => navigation.navigate('Score', { id: id })} />
               </View>
           </View>
         
-      </View>
+      
           <View style={styles.tableContainer}>
               <Table >
                 <Row data={header} style={styles.HeadStyle} textStyle={styles.TableText} />
@@ -148,33 +152,30 @@ const styles = StyleSheet.create({
     backgroundColor:COLORS.blue,
     borderRadius:5,
     padding:5,
+    flex:1,
  
    },
   col2 : {
-    height: 30,
     width: '50%',
   },
   col3 : {
+    flex:0,
     width: '50%',
+    flexWrap:'wrap',
+    marginBottom:50
   },
   col4 : {
     width: '45%',
-    paddingHorizontal:20
+    flex:1,
+    paddingHorizontal:20,
+    marginTop:50
   },
 
   
 
-  
-  purple : {
-    width: '50%',
-  },
-  violet : {
-    width: '100%',
-  },
   container: {
     paddingHorizontal:10,
     paddingVertical:10,
-    flex: 1
   },
   headerStyle: {
     fontSize: 24,
@@ -184,6 +185,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     flex: 1,
+
   },
 
   body: {
@@ -248,9 +250,6 @@ const styles = StyleSheet.create({
   TableText: {
     margin: 10,
     textAlign: 'center',
-    borderStyle:{
-      borderWidth:1,
-      }
   }
 });
 
