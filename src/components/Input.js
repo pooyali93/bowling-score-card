@@ -17,7 +17,7 @@ const Input = ({label,iconName, error, onFocus=()=>{}, ...props }) => {
                     ?COLORS.red
                     :isFocused 
                     ?COLORS.black
-                    :COLORS.lightblue
+                    :COLORS.grey
                     }]}>
                 <TextInput 
                     style={{flex:1}}
@@ -33,7 +33,7 @@ const Input = ({label,iconName, error, onFocus=()=>{}, ...props }) => {
                     
                     <Ionicons 
                     name={iconName} 
-                    style={{fontSize:22, color:COLORS.lightblue}}
+                    style={{fontSize:22, color:COLORS.black}}
                     />
             </View>
             {error && (

@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ViewGames from './src/screens/ViewGames';
 import { GameProvider } from './src/context/GameContext';
 import ScoreEnd from './src/screens/ScoreEnd';
+import EditGames from './src/screens/EditGames';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,7 @@ export default function App() {
         />
         <Stack.Screen name="View Games" component={ViewGames} />
         <Stack.Screen name="Score" component={ScoreEnd} />
+        <Stack.Screen name="Edit Game" component={EditGames} />
 
       </Stack.Navigator>
       </GameProvider>

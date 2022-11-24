@@ -3,7 +3,7 @@ export const actionTypes = {
     update: 'Update',
     delete: 'Delete',
     save: 'Save',
-    load: 'Save',
+    load: 'Load',
     score: 'Score'
     
 };

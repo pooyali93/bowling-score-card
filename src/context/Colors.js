@@ -3,8 +3,9 @@ const COLORS = {
     black:"2b2b2b",
     lightblue:"#4682b4",
     gray:"gray",
-    light:"#f5f5f5",
-    red:"red",
+    blue:'#d4e4ff',
+    light:"#ececec",
+    border:'#dadde1'
 }
 
 export default COLORS;

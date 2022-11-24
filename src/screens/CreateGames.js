@@ -1,11 +1,11 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, Button , SafeAreaView, StatusBar, Keyboard} from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Ionicons } from '@expo/vector-icons';
 import GameContext from '../context/GameContext';
 import Input from '../components/Input';
 import Buttons from '../components/Buttons';
 import COLORS from '../context/Colors';
+import { Ionicons } from '@expo/vector-icons';
 
 const CreateGames = ({navigation}) => {
   const {create} = useContext(GameContext);
@@ -22,24 +22,22 @@ const CreateGames = ({navigation}) => {
   // const updateTeamOnePlayers = (path, value) => {
   //   setTeamOnePlayerNames({...teamOnePlayerNames, [path]: value});
   // };
-  const [teamTwoPlayerNames, setTeamTwoPlayerNames] = useState([]);
-   const updateTeamTwoPlayers= (path, value) => {
-    setTeamTwoPlayerNames({...teamTwoPlayerNames, [path]: value});
-   };
+  
 
+  const [selectedDate, setSelectedDate ] = useState([])
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const [selectedDate, setSelectedDate] = useState();
-  const [datePickerVisible, setDatePickerVisible] = useState(false);
   const showDatePicker = () => {
-    setDatePickerVisible(true);
+    setDatePickerVisibility(true);
   };
 
   const hideDatePicker = () => {
-    setDatePickerVisible(false);
+    setDatePickerVisibility(false);
   };
 
   const handleConfirm = (date) => {
-    setSelectedDate(date);
+   console.log("A date has been picked: ", date.toLocaleDateString());
+    setSelectedDate(date.toLocaleDateString())
     hideDatePicker();
   };
   const [inputs, setInputs] = useState({
@@ -47,6 +45,7 @@ const CreateGames = ({navigation}) => {
     rink:"",
     teamOne:"",
     teamTwo:"",
+    selectedDate:"",
     teamOnePlayerOne:"",
     teamOnePlayerTwo:"",
     teamOnePlayerThree:"",
@@ -78,44 +77,23 @@ const CreateGames = ({navigation}) => {
     if(!inputs.teamTwoPlayerOne){
       handleError("Please input first players name", 'teamTwoPlayerTwo');
     }
-    else {
-    create(
-      inputs.competitionName, 
-      inputs.rink,
-      inputs.teamOne,
-      inputs.teamTwo, 
-      inputs.teamOnePlayerOne, 
-      inputs.teamOnePlayerTwo,
-      inputs.teamOnePlayerThree,
-      inputs.teamOnePlayerFour,
-      inputs.teamTwoPlayerOne, 
-      inputs.teamTwoPlayerTwo,
-      inputs.teamTwoPlayerThree,
-      inputs.teamTwoPlayerFour,
-      navigation.navigate("Previous Games"));
-    }
+    else { }
   }; 
 
   const handleOnChange = (text, input) => {
     setInputs(prevState =>({...prevState, [input]: text}));
-    console.log("print text")
-    console.log(text)
+    // console.log("print text")
+    // console.log(text)
 
   };
 
   const handleError = (errorMessage, input) => {
     setError(prevState =>({...prevState, [input]: errorMessage }))
   };
-  console.log("inputs")
-  console.log(inputs.teamOnePlayerOne)
-
-  useEffect (() => {
-
-
-  },[numOfPlayers]) 
-
+  // console.log("inputs")
+  // console.log(inputs.teamOnePlayerOne)
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView>
         <ScrollView style={styles.scrollView}>
         <Text style={styles.heading}> Create your game </Text>
           <View style={styles.innerContainer}>
@@ -128,8 +106,9 @@ const CreateGames = ({navigation}) => {
               onChangeText={(text) => handleOnChange(text, 'competitionName' )}
               />
             
-            <Input 
-              label="Rink No" 
+            <Input  
+            label="Rink No" 
+             
               keyboardType="numeric"
               returnKeyType={'done'}
               placeholder="Type rink number"
@@ -147,32 +126,30 @@ const CreateGames = ({navigation}) => {
 
             <Input 
                 label="Second team name" 
-                returnKeyType={'next'}
+                returnKeyType={'done'}
                 placeholder="Enter team name" 
                 // error={error.teamTwo}
                 onChangeText={(text) => handleOnChange(text, 'teamTwo' )}
                 />
 
-              <View style={{}}>
-                <Input 
-                  style={{width:'100%'}}
-                  label="Select a date"
-                  onChangeText={(text) => handleOnChange(text, 'date' )}
-                  placeholder={selectedDate ? selectedDate.toLocaleDateString() : 'Select a date'}
-                  />
-                <DateTimePickerModal
-                  isVisible={datePickerVisible}
-                  mode="date"
-                  locale="en_GB"
-                  onConfirm={handleConfirm}
-                  onCancel={hideDatePicker}
-                  />
-               <Ionicons  name="calendar-sharp" size={32} style={styles.icon} color="black" onPress={showDatePicker}/>
-            </View> 
+                <Text style={styles.textLabel}>Select a date</Text>
+              
+
+                        <View style={styles.inputContainer}>
+                        <Text style={styles.icon}>{selectedDate}</Text>
+
+                        <Ionicons name="calendar-sharp" style={{fontSize:24, color:COLORS.lightblue}} onPress={showDatePicker} />
+                              
+                              <DateTimePickerModal
+                                isVisible={isDatePickerVisible}
+                                mode="date"
+                                onConfirm={handleConfirm}
+                                onCancel={hideDatePicker}
+                              />
+                            
+                            </View>
             
-            
-            
-               <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text>
+               {/* <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text> */}
                       <Input 
                       label="First team Players"
                         returnKeyType={'next'}
@@ -238,6 +215,7 @@ const CreateGames = ({navigation}) => {
                 inputs.rink,
                 inputs.teamOne,
                 inputs.teamTwo, 
+                selectedDate,
                 inputs.teamOnePlayerOne, 
                 inputs.teamOnePlayerTwo,
                 inputs.teamOnePlayerThree,
@@ -269,25 +247,28 @@ const styles = StyleSheet.create({
     borderRadius:10,
     marginVertical:20
   },
+  inputContainer: {
+    height:40,
+    borderWidth:0.5,
+    paddingHorizontal:10,
+    //marginBottom:5,
+    flexDirection:'row',
+    alignItems:'center',
+    backgroundColor:'white'
+  },
   scrollView: {
     paddingTop:30,
     paddingHorizontal: 20,
   },
   icon:{
     position:'absolute',
-    top:38,
-    right:1,
+    top:12,
+    right:10,
    justifyContent:'center', 
    alignItems:'center',
-   color:COLORS.lightblue
-  },
-  dateContainer: {
-    width:'50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth:1,
-    margin:0,
-    padding:8
+   color:COLORS.black,
+   fontSize:16,
+   letterSpacing:5
   },
    
   heading: {
@@ -335,12 +316,3 @@ const styles = StyleSheet.create({
 
 export default CreateGames;
 
-/*
-<Button style={styles.button} >
-          
-          title="Submit Item" onPress={() => {
-           // callback({competitionName:competitionName, rink:rink, });
-            //navigation.pop();
-        }}
-        </Button> 
-        */

@@ -1,3 +1,88 @@
+
+
+<View>
+            <Table >
+              <Row data={header} style={styles.HeadStyle} textStyle={styles.TableText} />
+              {/* <Rows data={DataTable} textStyle={styles.TableText}/> */}
+              <FlatList
+                data={rowsData}
+                keyExtractor={(e) => e.toString()}
+                renderItem={({ item }) => {
+                  // if(item.end ===1) {
+                  //   t1Run =0;
+                  //   t2Run=0;
+                  // }
+                  // t1Run += item.t1shots
+                  // t2Run += item.t2shots
+                  // const rowData = [
+                  //   item.t1shots, t1Run, item.end, item.t2shots, t2Run]
+                  return (
+                    // <Text>{JSON.stringify(item)}</Text>
+                    <Row data={item} textStyle={styles.TableText} />
+                  )
+                }}
+              />
+            </Table>
+            </View>
+ <View style={{height: 100,}}>
+                <Text style={styles.label}>{currentEntry.teamOnePlayerOne}</Text>
+                <Text style={styles.label}>{currentEntry.teamOnePlayerTwo}</Text>
+                <Text style={styles.label}>{currentEntry.teamOnePlayerThree}</Text>
+                <Text style={styles.label}>{currentEntry.teamOnePlayerFour}</Text>
+                </View>
+
+            <View style={{height: 100,justifyContent: 'flex-end',}}>
+                <Text style={styles.label}>{currentEntry.teamTwoPlayerOne}</Text>
+                <Text style={styles.label}>{currentEntry.teamTwoPlayerTwo}</Text>
+                <Text style={styles.label}>{currentEntry.teamTwoPlayerThree}</Text>
+                <Text style={styles.label}>{currentEntry.teamTwoPlayerFour}</Text>
+            </View>
+
+
+
+<View style={styles.tableContainer}>
+            <Table >
+              <Row data={header} style={styles.HeadStyle} textStyle={styles.TableText} />
+              {/* <Rows data={DataTable} textStyle={styles.TableText}/> */}
+              <FlatList
+                data={rowsData}
+                keyExtractor={(e) => e.toString()}
+                renderItem={({ item }) => {
+                  // if(item.end ===1) {
+                  //   t1Run =0;
+                  //   t2Run=0;
+                  // }
+                  // t1Run += item.t1shots
+                  // t2Run += item.t2shots
+                  // const rowData = [
+                  //   item.t1shots, t1Run, item.end, item.t2shots, t2Run]
+                  return (
+                    // <Text>{JSON.stringify(item)}</Text>
+                    <Row data={item} textStyle={styles.TableText} />
+                  )
+                }}
+              />
+            </Table>
+          </View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 date picker 
 <View style={styles.dateContainer} >
     <DateTimePickerModal
@@ -131,3 +216,363 @@ creating playersname in Create game
                               )
                         }
                         <Text style={styles.brandText}> {JSON.stringify(teamTwoPlayerNames)}</Text> */}  
+
+
+competitionName, rink, teamOne,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour, teamTwo
+
+
+
+
+game context page 
+import  React from 'react'
+import { useReducer, useEffect} from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+import { actionTypes } from '../helpers/actionTypes';
+
+const GameContext = React.createContext();
+const STORAGE_KEY = "BowlsGamePass"; 
+
+let initialGames = []
+
+const reducer = (state, action) => {
+  switch (action.type) {
+      case actionTypes.create:
+        // console.log(action.payload)
+        // console.log("Test")
+          return[
+              ...state,
+              {
+                id: uuid.v4(),
+                competitionName:action.payload.competitionName,
+                rink:action.payload.rink,
+                teamOne:action.payload.teamOne,
+                teamTwo:action.payload.teamTwo,
+                teamOnePlayerOne:action.payload.teamOnePlayerOne,
+                teamOnePlayerTwo:action.payload.teamOnePlayerTwo,
+                teamOnePlayerThree:action.payload.teamOnePlayerThree,
+                teamOnePlayerFour:action.payload.teamOnePlayerFour,
+                teamTwoPlayerOne:action.payload.teamTwoPlayerOne,
+                teamTwoPlayerTwo:action.payload.teamTwoPlayerTwo,
+                teamTwoPlayerThree:action.payload.teamTwoPlayerThree,
+                teamTwoPlayerFour:action.payload.teamTwoPlayerFour,
+                date:action.payload.date,
+                teamOneScore:action.payload.teamOneScore,
+                teamTwoScore:action.payload.teamTwoScore,
+                Score:[],
+              }
+          ];
+
+        case actionTypes.score:
+        // console.log(action.payload)
+        // console.log("Test")
+        //   console.log("Find the game")
+          // console.log(state);
+          // console.log(action.payload)
+            
+            if(action.payload.team === 1 ) {
+              state.find(game => game.id === action.payload.id ).teamOneScore = [...state.find(game => game.id === action.payload.id ).teamOneScore, action.payload.score];
+              state.find(game => game.id === action.payload.id ).teamTwoScore = [...state.find(game => game.id === action.payload.id ).teamTwoScore, 0];
+
+             } else if ( action.payload.team === 2 ){
+              state.find(game => game.id === action.payload.id ).teamTwoScore = [...state.find(game => game.id === action.payload.id ).teamTwoScore, action.payload.score];
+              state.find(game => game.id === action.payload.id ).teamOneScore = [...state.find(game => game.id === action.payload.id ).teamOneScore, 0];
+             }
+
+        
+              //  teamOneScore: [4],
+              //  teamTwoScore:[1]   
+              // console.log("score for team 1")
+              // console.log(state.find(game => game.id === action.payload.id ).teamOneScore)
+              // console.log("score for team 2")
+              // console.log(state.find(game => game.id === action.payload.id ).teamTwoScore)
+              return state;
+
+          case actionTypes.save:
+            try {
+              AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+              console.log(e);
+            }finally {
+              return state;
+            }
+          case actionTypes.load:
+            return [
+              ...state, {
+                id: uuid.v4(),
+                competitionName:action.payload.competitionName,
+                rink:action.payload.rink,
+                teamOne:action.payload.teamOne,
+                teamTwo:action.payload.teamTwo,
+                teamOnePlayerOne:action.payload.teamOnePlayerOne,
+                teamOnePlayerTwo:action.payload.teamOnePlayerTwo,
+                teamOnePlayerThree:action.payload.teamOnePlayerThree,
+                teamOnePlayerFour:action.payload.teamOnePlayerFour,
+                teamTwoPlayerOne:action.payload.teamTwoPlayerOne,
+                teamTwoPlayerTwo:action.payload.teamTwoPlayerTwo,
+                teamTwoPlayerThree:action.payload.teamTwoPlayerThree,
+                teamTwoPlayerFour:action.payload.teamTwoPlayerFour,
+                date:action.payload.date,
+                teamOneScore:action.payload.teamOneScore,
+                teamTwoScore:action.payload.teamTwoScore,
+                Score:action.payload.Score,
+              }
+            ]
+          case actionTypes.update:
+              return state.map((item) => {
+                  if(item.id === action.payload.id) {
+                      return action.payload;
+                  }else {
+                      return item;
+                  }
+              });
+          case actionTypes.delete: 
+              return state.filter((e) => e.id !== action.payload.id);
+          default:
+              return state;
+  };
+};
+
+export const GameProvider = ({children})  => {
+  const [state, dispatch] = useReducer(reducer, initialGames);
+  useEffect(() => {
+    const loadStorage = async () => {
+      const storage = await AsyncStorage.getItem(STORAGE_KEY);
+      if(storage !== null && state.length ===0 ) {
+        initialGames = JSON.parse(storage);
+        initialGames.forEach(element => {
+          dispatch({type: actionTypes.load, payload:element});
+        })
+      }
+    }
+    loadStorage();
+  }, [STORAGE_KEY])
+  
+  const addGame = (competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour, callback) => {  
+    dispatch({type: actionTypes.create, payload: {competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour}});
+    dispatch({type: actionTypes.save});
+    if(callback) {
+      callback();
+    }
+  };
+
+
+  const updateGame = (id, competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour,date, callback) => {
+    dispatch({type: actionTypes.update, payload: {id, competitionName, rink, teamOne, teamTwo,teamOnePlayerOne,teamOnePlayerTwo,teamOnePlayerThree,teamOnePlayerFour,teamTwoPlayerOne,teamTwoPlayerTwo,teamTwoPlayerThree,teamTwoPlayerFour,date}});
+    dispatch({type: actionTypes.save});
+    if(callback) callback();
+    
+  };
+
+const deleteGame = (id, callback) => {
+    dispatch({type: actionTypes.delete, payload: {id: id}});
+    dispatch({type: actionTypes.save});
+    if(callback) callback();
+    
+  };
+
+  const addScore = (id, team, score , callback) => {
+    dispatch({type: actionTypes.score, payload: {id,team, score }});
+    // console.log("team score one")
+    // console.log(team)
+    // console.log(score)
+
+  }
+
+   const updateTeamTotal = (id, teamOneScore,teamTwoScore, callback) => {
+     dispatch({type: actionTypes.update, payload: {id,teamOneScore,teamTwoScore }});
+  //    console.log(`Testing Team A ${teamOneScore}`)
+   }
+
+   const updateTotalA = (id, TeamOneTotal,Scores,callback) => {
+    const currentEntry = state.find((e) => e.id===id);
+    let competitonName = currentEntry.competitonName
+    let date = currentEntry.date
+    let rinkNumber = currentEntry.rinkNumber
+    let teamNameA = currentEntry.teamNameA
+    let NumberOfPlayers = currentEntry.NumberOfPlayers
+    let teamNameB = currentEntry.teamNameB
+    let PlayerA1Name = currentEntry.PlayerA1Name
+    let PlayerA2Name = currentEntry.PlayerA2Name
+    let PlayerA3Name = currentEntry.PlayerA3Name
+    let PlayerA4Name = currentEntry.PlayerA4Name
+    let PlayerB1Name = currentEntry.PlayerB1Name
+    let PlayerB2Name = currentEntry.PlayerB2Name
+    let PlayerB3Name = currentEntry.PlayerB3Name
+    let PlayerB4Name = currentEntry.PlayerB4Name
+    let StoredPhotoA = currentEntry.StoredPhotoA
+    let StoredPhotoB = currentEntry.StoredPhotoB
+    //console.log(currentEntry.PhotoA)
+    //console.log(currentEntry.PhotoB)
+    if (currentEntry.TeamBTotal !== null){
+        let TeamBTotal = currentEntry.TeamBTotal
+        dispatchGD({type: actionTypes.updateGameDetails, payload:{id,competitonName,date,rinkNumber,teamNameA,NumberOfPlayers,teamNameB,
+            PlayerA1Name,PlayerA2Name,PlayerA3Name,PlayerA4Name,PlayerB1Name,PlayerB2Name,
+            PlayerB3Name,PlayerB4Name,StoredPhotoA,StoredPhotoB, TeamATotal,TeamBTotal,Scores}});
+    } else {
+        dispatchGD({type: actionTypes.updateGameDetails, payload:{id,competitonName,date,rinkNumber,teamNameA,NumberOfPlayers,teamNameB,
+            PlayerA1Name,PlayerA2Name,PlayerA3Name,PlayerA4Name,PlayerB1Name,PlayerB2Name,
+            PlayerB3Name,PlayerB4Name,StoredPhotoA,StoredPhotoB, TeamATotal,Scores}});
+    }
+    
+    dispatchGD({type: actionTypes.saveGameDetails})
+    if (callback) callback();
+};
+
+  
+
+
+ 
+ 
+  return (
+    <GameContext.Provider value={{
+      state:state, 
+      create:addGame,
+      remove:deleteGame,
+      update:updateGame,
+      addScore:addScore,
+      updateTeamTotal:updateTeamTotal
+      }}>
+      {children}
+    </GameContext.Provider>
+  );
+};
+
+export default GameContext;
+
+
+
+
+view game flat list 
+
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, Button, ScrollView, SafeAreaView, FlatList } from 'react-native';
+import Buttons from '../components/Buttons';
+import COLORS from '../context/Colors';
+import GameContext from '../context/GameContext';
+
+const ViewGames = ({ route, navigation }) => {
+  const { id } = route.params;
+  const { state } = useContext(GameContext);
+  const currentEntry = state.find((e) => e.id === id);
+  //  console.log("current entry")
+  // console.log(currentEntry)
+ 
+
+
+  return (
+    <SafeAreaView style={styles.body}>
+      <ScrollView>
+        <Text style={styles.title}>Game Scorecard</Text>
+        <View style={styles.container}>
+          <View style={styles.listContainer}>
+            <View style={styles.top}>
+              <View style={{ borderBottomWidth: 1, borderBottomColor: COLORS.border }}>
+                <Text style={styles.label}>Competition:   {currentEntry.competitionName}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: COLORS.border }}>
+                <Text style={styles.label}>Rink No: {currentEntry.rink}</Text>
+                <Text style={styles.label}>Date: {currentEntry.date}</Text>
+              </View>
+              <View  style={{backgroundColor:COLORS.blue,borderBottomWidth: 1, borderBottomColor: COLORS.border} }>
+              <Text style={styles.label}>Teams</Text>
+              </View>
+              <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: COLORS.border }}>
+                <Text style={styles.label}>{currentEntry.teamOne}</Text>
+                <Text style={styles.label}>{currentEntry.teamTwo}</Text>
+              </View>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                <View style={{width:'50%', backgroundColor:COLORS.blue}}>
+                <Text style={{textAlign:'left', fontSize:18, paddingVertical:10}}>{currentEntry.teamOne} Players</Text>
+                  <Text style={styles.label}>{currentEntry.teamOnePlayerOne}</Text>
+                  <Text style={styles.label}>{currentEntry.teamOnePlayerTwo}</Text>
+                  <Text style={styles.label}>{currentEntry.teamOnePlayerThree}</Text>
+                  <Text style={styles.label}>{currentEntry.teamOnePlayerFour}</Text>
+                </View>
+                <View style={{width:'50%', backgroundColor:COLORS.light}}>
+                <Text style={{textAlign:'left', fontSize:18, paddingVertical:10}}>{currentEntry.teamTwo} Players</Text>
+                  <Text style={styles.label}>{currentEntry.teamTwoPlayerOne}</Text>
+                  <Text style={styles.label}>{currentEntry.teamTwoPlayerTwo}</Text>
+                  <Text style={styles.label}>{currentEntry.teamTwoPlayerThree}</Text>
+                  <Text style={styles.label}>{currentEntry.teamTwoPlayerFour}</Text>
+                </View>
+                </View>
+
+                <View style={styles.container}>
+                  <FlatList
+                    data={state}
+                    <SectionList
+                        sections={DATA}
+                        keyExtractor={(item, index) => item + index}
+                        renderItem={({ item }) => <Item title={item} />}
+                        renderSectionHeader={({ section: { title } }) => (
+                          <Text style={styles.header}>{title}</Text>
+                        )}
+                      />
+                      <View style={styles.listContainer}>
+                         <Text style={styles.row}>{item.teamOne} Shots {item.teamOneScore} </Text>
+                         <Text style={styles.row}>{item.teamTwo} Shots {item.teamTwoScore} </Text>
+                         </View>
+                      }
+                  
+                  />
+                  </View>
+    
+              
+            </View>
+           
+
+          </View>
+          <Buttons title="Edit" onPress={() => navigation.navigate('Edit Game', { id: id })} />
+          <Buttons title="Start Game" onPress={() => navigation.navigate('Score', { id: id })} />
+
+
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  body: {
+    paddingHorizontal: 20,
+    paddingVertical: 20
+  },
+
+  container: {
+    flex: 1,
+  },
+  label: {
+    fontSize: 18,
+    color: COLORS.black,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    paddingRight: 100
+
+
+  },
+  title: {
+    fontSize: 22,
+    color: 'black',
+
+  },
+  top: {
+    width: '100%',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  listContainer: {
+    flexDirection: 'column',
+    flexWrap: 'wrap'
+
+
+  },
+  row: {
+    flex: 1,
+    fontSize:18
+
+  }
+});
+
+export default ViewGames;

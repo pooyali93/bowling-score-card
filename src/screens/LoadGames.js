@@ -3,12 +3,10 @@ import { View, StyleSheet, Text, FlatList, Pressable} from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import GameContext from "../context/GameContext";
 
-
-
 const LoadGames = ({navigation}) => {
     const {state, remove} = useContext(GameContext);
-    // console.log("Print State ")
-    // console.log(state)
+    //  console.log("Print State ")
+    //  console.log(state)
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -32,24 +30,14 @@ const LoadGames = ({navigation}) => {
                         id: item.id,
                         competitionName: item.competitionName,
                         rink: item.rink,
-                        date: new Date(),
-                        teamOne: item.teamOne,
-                        teamTwo: item.teamTwo,
-                        teamOnePlayerOne: item.teamOnePlayerOne,
-                        teamOnePlayerTwo: item.teamOnePlayerTwo,
-                        teamOnePlayerThree: item.teamOnePlayerThree,
-                        teamOnePlayerFour: item.teamOnePlayerFour,
-                        teamTwoPlayerOne: item.teamTwoPlayerOne,                      
-                        teamTwoPlayerTwo: item.teamTwoPlayerTwo,                      
-                        teamTwoPlayerThree: item.teamTwoPlayerThree,                      
-                        teamTwoPlayerFour: item.teamTwoPlayerFour,                      
+                        selectedDate: item.selectedDate,                    
                      } )}>
                     <View style={styles.itemContainer}>
                             <Text style={styles.itemContainer}> 
                                 {item.competitionName}
                             </Text>
                             <Text style={styles.itemContainer}> 
-                                {item.date = new Date().toLocaleDateString()}
+                                {item.selectedDate}
                             </Text>
                         <Pressable onPress={() => {remove(item.id)}}>
                             <Ionicons name='trash' size={28} color="red" />
@@ -69,7 +57,6 @@ const LoadGames = ({navigation}) => {
 const styles = StyleSheet.create({
     mainContainer: {
         marginTop:10,
-        borderColor:'red',
         padding:10,
     },
     itemContainer: {
